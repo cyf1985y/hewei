@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+
+<title>新增工作</title>
+</head>
+<body>
+	<div class="container">
+		<h3>排班表-明細修改</h3>
+		<hr>
+		
+		<p class="h4 mb-4">工作明細</p>
+		<form action="#" th:action="@{/tasks/save}"
+						 th:object="${task}" method="POST">
+			<!-- Add hidd from field to handle update -->
+			<input type="hidden" th:field="*{assignNo}">
+			<input type="hidden" th:field="*{createId}">
+			<input type="hidden" th:field="*{createDateTime}">
+			<input type="hidden" th:field="*{status}">
+			<input type="text" th:field="*{customerName}"
+					class="form-control mb-4 col-6" placeholder="客戶名稱" required>
+			<input type="date" th:field="*{assignDate}"
+					class="form-control mb-4 col-6" placeholder="安排日期">
+			<input type="time" th:field="*{assignStartTime}"
+					class="form-control mb-4 col-6" placeholder="起始時間">
+			<select th:field="*{empId}" class="form-control mb-4 col-6">
+					<option value="">請選擇(司機)</option>
+					<option th:each="emp : ${empMap}" th:value="${emp.key}" th:text="${emp.value}"></option>
+			</select>
+			<select th:field="*{carNo}" class="form-control mb-4 col-6">
+					<option value="">請選擇(車牌)</option>
+					<option value="AKX-6299">AKX-6299</option>
+					<option value="AGS-2869">AGS-2869</option>
+					<option value="3159-RM">3159-RM</option>
+					<option value="9278-MU">9278-MU</option>
+					<option value="3199-TN">3199-TN</option>
+					<option value="2678-VP">2678-VP</option>
+					<option value="6856-HA">6856-HA</option>
+			</select>
+			<textarea th:field="*{memo}"
+					class="form-control mb-4 col-6" ></textarea>
+			<button type="submit" class="btn btn-info col-4">修改</button>
+			<!-- Add delete button/link --> 
+			<a	th:href="@{/tasks/delete(taskId=${task.assignNo})}"
+						class="btn btn-danger col-4"
+						onclick="if (!(confirm('你確定要刪除這份工作安排?'))) return false"> 刪除 </a>
+		</form>
+		
+		<hr>
+		<a th:href="@{/tasks/list}">返回工作清單</a>
+	</div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+  <script type="text/javascript" th:src="@{/js/lib/jquery-3.4.1.min.js}"></script>
+  <script type="text/javascript" th:src="@{/js/script.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<title>秤重</title>
+</head>
+<body>
+	<div class="container">
+		<h3>排班表-秤重</h3>
+		<hr>
+		<form action="#" th:action="@{/taskWeight/save}"
+						 th:object="${task}" method="POST">
+			<!-- Add hidd from field to handle update -->
+			<input type="hidden" th:field="*{assignNo}">
+			<input type="hidden" th:field="*{assignDate}">
+			<input type="hidden" th:field="*{createId}">
+			<input type="hidden" th:field="*{createDateTime}">
+			<input type="hidden" th:field="*{status}">
+			<h5><span>日期/時間/客戶名稱</span></h5>
+			<div class="input-group">
+				<span th:text=" *{assignDate}" class="form-control col-4" ></span>
+				<input type="time" th:field="*{assignStartTime}" class="form-control mb-2 col-3" placeholder="起始時間">
+				<input type="text" th:field="*{customerName}" class="form-control mb-4 col-6" placeholder="安排日期">
+			</div>
+			<h5><span>司機/車牌號碼</span></h5>
+			<div class="input-group">
+				<select th:field="*{empId}" class="form-control col-5">
+					<option value="">請選擇(司機)</option>
+					<option th:each="emp : ${empMap}" th:value="${emp.key}" th:text="${emp.value}" th:selected="${emp.key eq task.empId}"></option>
+				</select>
+				<select th:field="*{carNo}" class="form-control mb-4 col-5">
+					<option value="">請選擇(車牌)</option>
+					<option value="AKX-6299">AKX-6299</option>
+					<option value="AGS-2869">AGS-2869</option>
+					<option value="3159-RM">3159-RM</option>
+					<option value="9278-MU">9278-MU</option>
+					<option value="3199-TN">3199-TN</option>
+					<option value="2678-VP">2678-VP</option>
+					<option value="6856-HA">6856-HA</option>
+				</select>
+			</div>
+			<ul class="nav nav-tabs">
+    			<li th:switch="${listStat.index}" class="nav-item" th:each="taskWeight, listStat : ${task.taskWeights}">
+    					<a th:case="${listStat.size-1}" class="nav-link active" th:href="'#' + ${taskWeight.weightNo}"><span th:text="${taskWeight.weightNo}"></span></a>
+        				<a th:case="*" class="nav-link" th:href="'#' + ${taskWeight.weightNo}"><span th:text="${taskWeight.weightNo}"></span></a>
+        		</li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+			    <div th:class="${listStat.size-1} == ${listStat.index} ? 'container tab-pane active': 'container tab-pane fade'" th:id="${taskWeight.weightNo}" th:each="taskWeight, listStat : *{taskWeights}"><br>
+			      	<input type="hidden" th:field="*{taskWeights[__${listStat.index}__].assignNo}">
+					<input type="hidden" th:field="*{taskWeights[__${listStat.index}__].weightNo}">
+					<input type="hidden" th:field="*{taskWeights[__${listStat.index}__].createId}">
+					<input type="hidden" th:field="*{taskWeights[__${listStat.index}__].createDateTime}">
+			      	<select th:field="*{taskWeights[__${listStat.index}__].itemNo}" class="form-control mb-4 col-4">
+						<option value="">請選擇(項目)</option>
+						<option th:each="item : ${itemMap}" th:value="${item.key}" th:text="${item.value}" th:selected="${item.key eq taskWeight.itemNo}"></option>
+				  	</select> 
+			      	<h5><span>秤重人員/重量(重車)</span></h5>
+					<div class="input-group">
+						<select th:field="*{taskWeights[__${listStat.index}__].loadWeightId}" class="form-control col-5">
+							<option value="">請選擇(司機)</option>
+							<option th:each="emp : ${empMap}" th:value="${emp.key}" th:text="${emp.value}" th:selected="${emp.key eq taskWeight.loadWeightId}"></option>
+						</select>
+						<input type="text" th:field="*{taskWeights[__${listStat.index}__].loadWeight}" class="form-control mb-4 col-4">
+					</div>
+					<h5><span>秤重人員/重量(空車)</span></h5>
+					<div class="input-group">
+						<select th:field="*{taskWeights[__${listStat.index}__].emptyWeightId}" class="form-control col-5">
+							<option value="">請選擇(司機)</option>
+							<option th:each="emp : ${empMap}" th:value="${emp.key}" th:text="${emp.value}" th:selected="${emp.key eq taskWeight.emptyWeightId}"></option>
+						</select>
+						<input type="text" th:field="*{taskWeights[__${listStat.index}__].emptyWeight}" class="form-control mb-4 col-4">
+					</div>
+			    </div>
+			</div>
+			<div class="input-group" th:if="${task.status=='10'}">
+				<input type="submit" class="btn btn-primary" value="儲存">
+				<input type="button" class="btn btn-info" value="新增" onclick="newTaskWeight()">
+				<input type="button" class="btn btn-success" value="完成" onclick="taskWeightComplete()">
+			</div>
+		</form>
+		<hr>
+		<a th:href="@{/tasks/list}">返回工作清單</a>
+	</div>
+<script>
+$(document).ready(function(){
+  $(".nav-tabs a").click(function(){
+    $(this).tab('show');
+  });
+});
+</script>
+</body>
+</html>
