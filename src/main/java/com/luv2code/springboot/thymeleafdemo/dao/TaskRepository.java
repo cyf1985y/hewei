@@ -15,6 +15,8 @@ public interface TaskRepository extends JpaRepository<Task, String> {
 	
 	public List<Task> findByAssignDate(String date);
 	
+	public List<Task> findByAssignDateAndStatusNot(String date, String status);
+	
 	public List<Task> findByAssignNoStartingWith(String date, Sort sort);
 	
 	public List<Task> findByAssignNoStartingWithAndStatusNot(String date, String status, Sort sort);

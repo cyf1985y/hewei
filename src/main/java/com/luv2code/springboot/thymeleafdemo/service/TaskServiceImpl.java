@@ -81,7 +81,7 @@ public class TaskServiceImpl implements TaskService {
 		Sort sort = new Sort(Sort.Direction.ASC, "assignStartTime");
 		list.addAll(taskRepository.findByStatusAndAssignDateNot("10", date, sort));
 		list.addAll(taskRepository.findByAssignDateAndStatusNot(date, "98", sort));
-		list.addAll(taskRepository.findByAssignDate(null));
+		list.addAll(taskRepository.findByAssignDateAndStatusNot(null, "98", sort));
 		return list;
 	}
 
@@ -89,12 +89,13 @@ public class TaskServiceImpl implements TaskService {
 	public Map<String, String> getEmployeesList() {
 		Map<String, String> empMap = new LinkedHashMap<String, String>();
 		empMap.put("080", "王文達");
-		empMap.put("089", "陳春杰");
 		empMap.put("094", "李銘偉");
+		empMap.put("097", "游淳莅");
+		empMap.put("098", "張逸仁");
 		empMap.put("021", "李銘哲");
 		empMap.put("095", "林樹賢");
 		empMap.put("096", "林建豪");		
-		empMap.put("067", "曾中文");		
+		empMap.put("067", "曾忠文");		
 		empMap.put("003", "陳彥鋒");
 		return empMap;
 	}
