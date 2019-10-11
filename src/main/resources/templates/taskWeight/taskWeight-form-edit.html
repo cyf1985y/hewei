@@ -13,8 +13,8 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" th:href="@{/css/demo.css}" />
   <script type="text/javascript" th:src="@{/js/lib/jquery-3.4.1.min.js}"></script>
-  <script type="text/javascript" th:src="@{/js/script.js}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/script.js?n=1}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <title>秤重</title>
 </head>
@@ -80,11 +80,11 @@
 					</div>
 					<h3>秤重人員/重量(空車)</h3>
 					<div class="input-group">
-						<select th:field="*{taskWeights[__${listStat.index}__].emptyWeightId}" class="form-control form-control-lg col-6">
+						<select th:field="*{taskWeights[__${listStat.index}__].emptyWeightId}" class="form-control form-control-lg col-6" onclick="weightTextclick(this)">
 							<option value="">請選擇(司機)</option>
 							<option th:each="emp : ${empMap}" th:value="${emp.key}" th:text="${emp.value}" th:selected="${emp.key eq taskWeight.emptyWeightId}"></option>
 						</select>
-						<input type="text" th:field="*{taskWeights[__${listStat.index}__].emptyWeight}" class="form-control form-control-lg mb-4 col-4">
+						<input type="text" th:field="*{taskWeights[__${listStat.index}__].emptyWeight}" class="form-control form-control-lg mb-4 col-4" onclick="weightTextclick(this)">
 					</div>
 			    </div>
 			</div>

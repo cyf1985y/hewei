@@ -39,7 +39,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -53,36 +57,16 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
-			<version>2.1.5.RELEASE</version>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>com.microsoft.azure</groupId>
-				<artifactId>azure-webapp-maven-plugin</artifactId>
-				<version>1.6.0</version>
-				<configuration>
-					<appName>heweiErp</appName>
-					<resourceGroup>cloud-native</resourceGroup>
-					<runtime>
-						<os>linux</os>
-						<javaVersion>jre11</javaVersion>
-						<webContainer>tomcat 9.0</webContainer>
-					</runtime>
-					<!-- Begin of App Settings  -->
-					  <appSettings>
-						 <property>
-							   <name>JAVA_OPTS</name>
-							   <value>-Dserver.port=80</value>
-						 </property>
-					  </appSettings>
-					  <!-- End of App Settings  -->
-					
-				</configuration>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
-
+	<packaging>war</packaging>
 </project>

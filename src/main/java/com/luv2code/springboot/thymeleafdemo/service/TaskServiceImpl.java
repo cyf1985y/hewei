@@ -90,8 +90,6 @@ public class TaskServiceImpl implements TaskService {
 		Map<String, String> empMap = new LinkedHashMap<String, String>();
 		empMap.put("080", "王文達");
 		empMap.put("094", "李銘偉");
-		empMap.put("097", "游淳莅");
-		empMap.put("098", "張逸仁");
 		empMap.put("021", "李銘哲");
 		empMap.put("095", "林樹賢");
 		empMap.put("096", "林建豪");		
